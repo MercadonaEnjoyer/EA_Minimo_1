@@ -1,0 +1,44 @@
+<button *ngIf="!update" (click)="updateEdit(true)">Modo Edición</button>
+<button *ngIf="update" (click)="updateEdit(false)">Modo Lectura</button>
+
+<div *ngIf="update">
+  <form [formGroup]="editActivityForm" (ngSubmit)="updateActivity()">
+    
+    <label for="name">Name:</label>
+    <input type="name" id="name" formControlName="name"><br>
+    <div *ngIf="editActivityForm.get('name')?.invalid && (editActivityForm.get('name')?.dirty || editActivityForm.get('name')?.touched)">
+      <div *ngIf="editActivityForm.get('name')?.errors?.['required']" class="required-error">Name es requerido.</div>
+    </div>
+    
+    <label for="description">Description:</label>
+    <input type="description" id="description" formControlName="description"><br>
+    <div *ngIf="editActivityForm.get('description')?.invalid && (editActivityForm.get('description')?.dirty || editActivityForm.get('description')?.touched)">
+      <div *ngIf="editActivityForm.get('description')?.errors?.['required']" class="required-error">Description es obligatorio.</div>
+    </div>
+      
+    <button *ngIf="update" type="submit" [disabled]="editActivityForm.invalid">Update Activity</button> 
+
+  </form>
+</div>
+
+<div *ngIf="activity">
+  <h2>{{activity.name}} </h2>
+  <div><span>ID:</span> {{activity._id}}</div>
+  <div><span>Description:</span> {{activity.description}}</div>
+  <div><span>{{rating}} ☆</span></div>
+  <div *ngIf="user && user.name?.first_name"><span>Owner:</span> 
+    <div class="author-details">
+      <div><span>ID:</span> {{user._id}}</div>
+      <div><span>Name:</span> {{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</div>
+      <div><span>Email:</span> {{user.email}}</div>
+      <div><span>Phone Number:</span> {{user.phone_number}}</div>
+      <div><span>Gender:</span> {{user.gender}}</div>
+    </div>
+  </div>
+  
+  <!-- <app-comments [activity] = "ActivityID"></app-comments> -->
+  <app-comments [activity]="ActivityID" (commentsUpdate)="refreshActivity()"></app-comments>
+
+  
+  <button (click)="deselect.emit()">Back</button>
+</div>

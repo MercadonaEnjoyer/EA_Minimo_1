@@ -1,0 +1,32 @@
+<h3>Locations:</h3>
+
+<div class="locationBox">
+    <p>Add a location</p>
+    <form [formGroup]="postLocationForm" (ngSubmit)="postLocation()">
+    
+        <input type="text" id="location" formControlName="location" placeholder="Location"><br>
+        <div *ngIf="postLocationForm.get('location')?.invalid && (postLocationForm.get('location')?.dirty || postLocationForm.get('location')?.touched)">
+          <div *ngIf="postLocationForm.get('location')?.errors?.['required']" class="required-error">ID es requerido.</div>
+        </div>
+        
+        <input type="text" id="activities" formControlName="activities" placeholder="Activity ID"><br>
+        <div *ngIf="postLocationForm.get('activities')?.invalid && (postLocationForm.get('activities')?.dirty || postLocationForm.get('activities')?.touched)">
+          <div *ngIf="postLocationForm.get('activities')?.errors?.['required']" class="required-error">Título es requerido.</div>
+        </div>
+          
+        <button type="submit" [disabled]="postLocationForm.invalid">Add</button> 
+    
+      </form>
+</div>
+<div>
+    <ul class="locations">
+        <li *ngFor="let location of locations">
+            <div><span class="location">Location: {{location.location}}</span></div>
+            <div><span  class="activity">ACtivity ID: {{location.activities}}</span></div>
+            <button type="button" (click)="deleteLocation(location)">Delete location</button>
+            <br>
+        </li>
+        <button type="button" (click)="previousPage()" [disabled]="first_page"><span>{{previous}}</span></button>
+        <button type="button" (click)="nextPage()" [disabled]="last_page"><span>{{next}}</span></button>
+      </ul>
+</div>

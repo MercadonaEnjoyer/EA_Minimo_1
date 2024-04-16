@@ -3,7 +3,6 @@ import { IComment } from '../models/comments/model';
 import CommentService from '../models/comments/service';
 import UserService from '../models/users/service';
 import ActivityService from '../models/activities/service';
-import e = require('express');
 
 export class CommentController {
 
